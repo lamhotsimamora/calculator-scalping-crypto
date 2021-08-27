@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools untuk Trading Scalping</title>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/css/bootstrap.min.css"
+        integrity="sha512-NZ19NrT58XPK5sXqXnnvtf9T5kLXSzGQlVZL9taZWeTBtXoN3xIfTdxbkQh6QSoJfJgpojRqMfhyqBAAEeiXcA=="
+        crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+    <script src="assets/js/helper.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href=".">
+                <img src="assets/img/bitcoin.png" alt="" width="30" height="35" class="d-inline-block align-text-top">
+                Scalping Trading</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" target="_blank" href="https://course.pdrtechnology.net/app/register">Private
+                        Training</a>
+                    <a class="nav-link" target="_blank"
+                        href="https://github.com/lamhotsimamora/calculator-scalping-crypto">Fork Me</a>
+                        <a class="nav-link" target="_blank"
+                        href="https://github.com/lamhotsimamora/">Developer</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container" id="app">
+        <div class="card text-white bg-dark mb-3">
+            <div class="card-body">
+                <p>
+                <h5>Aplikasi ini berguna <strong>untuk menghitung jumlah profit</strong> yang ingin kita capai dalam 1
+                    hari, dengan modal yang ada.
+                </h5>
+                <hr>
+                <small>Apa itu scalping baca terlebih dahulu
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_scalping_details">disini</a>.</small>
+                </p>
+            </div>
+        </div>
+
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <button class="btn btn-primary" @click="calculateProfitPerScalping">Hitung</button>
+                <br><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="modal">Jumlah Modal (Rp)</span>
+                    <input type="number" v-model="modal" class="form-control" placeholder="Rp 5.000.000"
+                        aria-label="Username" aria-describedby="modal">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="target_profit_perday_inpersen">Target Profit Per Hari (%)</span>
+                    <input type="number" v-model="target_profit_perday_inpersen" class="form-control" placeholder="0.1"
+                        aria-label="Username" aria-describedby="target_profit_perday_inpersen">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="target_profit_perday_inrupiah">Target Profit Per Hari(Rp)</span>
+                    <input type="number" v-model="target_profit_perday_inrupiah" class="form-control"
+                        placeholder="Rp 250.000" aria-label="Username" aria-describedby="target_profit_perday_inrupiah">
+                </div>
+
+                <span class="badge bg-success">
+                    <h5>Total profit per scalping : <strong v-html="_moneyFormat(total_profit_perscalping)"></strong>
+                    </h5>
+                </span>
+                <br><br>
+
+                <span class="badge bg-secondary">
+                    <h5>Jml scalping perhari minimal : <strong v-html="(total_scalping_perday)"> </strong></h5>
+                </span>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_scalping_details" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Apa itu Scalping ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                    <h5>
+                        Scalping adalah strategi yang banyak dipilih oleh trader yang ingin memperoleh keuntungan dengan
+                        cepat. <br><br>
+                        Meski mirip dengan day trading, scalping cenderung lebih besar modalnya. Selain itu, day trading
+                        biasanya dilakukan oleh trader setiap hari.<br><br>
+                        Berbeda dengan scalper (pelaku scalping) yang hanya melakukan trading dalam waktu sangat singkat
+                        dan bukan dilakukan setiap hari. <br><br>
+
+                        Scalper memanfaatkan pergerakan-pergerakan kecil dari komoditas tertentu untuk mendapatkan
+                        cuan.<br>
+                        <br>
+                        Karena tidak terpengaruh dengan analisis fundamental maupun berita, scalper umumnya sudah punya
+                        pola teknikal tersendiri yang terdiri dari berbagai indikator.
+                    </h5>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
